@@ -1,0 +1,53 @@
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - group: project-group
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+- script: pwd
+  displayName: 'Print Working Directory'
+
+- script: ls
+  displayName: 'List Files in Working Directory'
+
+
+- task: TerraformInstaller@1
+  displayName: 'Install Terraform'
+  inputs:
+    terraformVersion: 'latest'
+
+- script: terraform init
+  displayName: 'Terraform Init'
+  workingDirectory: '/home/vsts/work/1/s'  # <-- adjust this path if your .tf files are elsewhere
+
+- script: terraform validate
+  displayName: 'Terraform Validate'
+  workingDirectory: '/home/vsts/work/1/s'
+
+
+
+- script: terraform plan
+  displayName: 'Terraform Plan'
+  workingDirectory: '/home/vsts/work/1/s'  
+
+- script: |
+    terraform apply -auto-approve
+  displayName: 'Terraform Apply'
+  workingDirectory: '/home/vsts/work/1/s'
+  env:
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
