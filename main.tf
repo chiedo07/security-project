@@ -1,30 +1,45 @@
-resource "azurm_resource_group" "sec" {
-    name = var.azurm_resource_group_name
-    location = var.location
-    tags = var.tags
+# Define the required provider
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0"
+    }
+  }
 }
 
-#Virtual Networks
+# Configure the Azure provider
+provider "azurerm" {
+  features {}
+}
 
+# Resource Group
+resource "azurerm_resource_group" "sec" {
+  name     = var.azurerm_resource_group_name  # Corrected variable name
+  location = var.location
+  tags     = var.tags
+}
+
+# Virtual Network
 resource "azurerm_virtual_network" "net" {
-  name = "${var.project_name} -vnet"
-  address_space = ["10.0.0.0/16"]
-  location = azurm_resource_group.sec.location
-  resource_group_name = azurm_resource_group.sec.name
+  name                = "${var.project_name}-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.sec.location
+  resource_group_name = azurerm_resource_group.sec.name
 }
 
-#Subnets
-
+# Subnet
 resource "azurerm_subnet" "web-tier" {
   name                 = "web-tier-subnet"
   resource_group_name  = azurerm_resource_group.sec.name
-  virtual_network_name = azurerm_virtual_network.sec.name
+  virtual_network_name = azurerm_virtual_network.net.name  # Corrected reference from 'sec' to 'net'
   address_prefixes     = ["10.0.1.0/24"]
 }
 
+# Network Interface
 resource "azurerm_network_interface" "example" {
   name                = "example-nic"
-  location = azurm_resource_group.sec.location
+  location            = azurerm_resource_group.sec.location
   resource_group_name = azurerm_resource_group.sec.name
 
   ip_configuration {
@@ -34,6 +49,7 @@ resource "azurerm_network_interface" "example" {
   }
 }
 
+# Linux Virtual Machine
 resource "azurerm_linux_virtual_machine" "secure" {
   name                = "security-machine"
   resource_group_name = azurerm_resource_group.sec.name
@@ -46,7 +62,7 @@ resource "azurerm_linux_virtual_machine" "secure" {
 
   admin_ssh_key {
     username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = file("~/.ssh/id_rsa.pub")  # Ensure this file exists
   }
 
   os_disk {
@@ -62,12 +78,11 @@ resource "azurerm_linux_virtual_machine" "secure" {
   }
 }
 
-# Web Tier NSG
-
+# Network Security Group
 resource "azurerm_network_security_group" "web_tier" {
   name                = "${var.project_name}-web-tier-nsg"
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = azurerm_resource_group.sec.location
+  resource_group_name = azurerm_resource_group.sec.name  # Use consistent reference
 
   # Allow HTTP traffic
   security_rule {
@@ -122,4 +137,10 @@ resource "azurerm_network_security_group" "web_tier" {
   }
 
   tags = var.tags
+}
+
+# Optional: Associate NSG with Subnet
+resource "azurerm_subnet_network_security_group_association" "web_tier" {
+  subnet_id                 = azurerm_subnet.web-tier.id
+  network_security_group_id = azurerm_network_security_group.web_tier.id
 }
