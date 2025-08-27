@@ -1,21 +1,21 @@
-resource "azurem_resource_group" "sec" {
-    name = var.azurem_resource_group_name
+resource "azurm_resource_group" "sec" {
+    name = var.azurm_resource_group_name
     location = var.location
     tags = var.tags
 }
 
 #Virtual Networks
 
-resource "azurerem_virtual_network" "net" {
+resource "azurerm_virtual_network" "net" {
   name = "${var.project_name} -vnet"
   address_space = ["10.0.0.0/16"]
-  location = azurem_resource_group.sec.location
-  resource_group_name = azurem_resource_group.sec.name
+  location = azurm_resource_group.sec.location
+  resource_group_name = azurm_resource_group.sec.name
 }
 
 #Subnets
 
-resource "azurem_subnet" "web-tier" {
+resource "azurerm_subnet" "web-tier" {
   name                 = "web-tier-subnet"
   resource_group_name  = azurerm_resource_group.sec.name
   virtual_network_name = azurerm_virtual_network.sec.name
@@ -24,8 +24,8 @@ resource "azurem_subnet" "web-tier" {
 
 resource "azurerm_network_interface" "example" {
   name                = "example-nic"
-  location = azurem_resource_group.sec.location
-  resource_group_name = azurem_resource_group.sec.name
+  location = azurm_resource_group.sec.location
+  resource_group_name = azurerm_resource_group.sec.name
 
   ip_configuration {
     name                          = "internal"
