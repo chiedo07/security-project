@@ -43,7 +43,7 @@ steps:
   workingDirectory: '/home/vsts/work/1/s'  
 
 - script: |
-    terraform apply -var "admin_password=YourStrongPassword123!"
+    terraform apply -var "admin_password=Lemeke@201"
   displayName: 'Terraform Apply'
   workingDirectory: '/home/vsts/work/1/s'
   env:
