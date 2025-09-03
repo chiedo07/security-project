@@ -3,6 +3,13 @@ variable "azurerm_resource_group_name" {
   type        = string
 }
 
+variable "admin_password" {
+  description = "Lemeke"
+  type        = string
+  sensitive   = true
+}
+
+
 variable "location" {
   description = "Azure region"
   type        = string

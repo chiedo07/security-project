@@ -60,10 +60,8 @@ resource "azurerm_linux_virtual_machine" "secure" {
     azurerm_network_interface.example.id,
   ]
 
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")  # Ensure this file exists
-  }
+ admin_password = "var.admin_password"   # <-- Add a strong password here
+  disable_password_authentication = false     # <-- Important when using passwords
 
   os_disk {
     caching              = "ReadWrite"
