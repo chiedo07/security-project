@@ -4,7 +4,7 @@ variable "azurerm_resource_group_name" {
 }
 
 variable "admin_password" {
-  description = "Lemeke@2002"
+  description = "LemekE@2!"
   type        = string
   sensitive   = true
 }
