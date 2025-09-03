@@ -60,7 +60,7 @@ resource "azurerm_linux_virtual_machine" "secure" {
     azurerm_network_interface.example.id,
   ]
 
- admin_password = "var.admin_password"   # <-- Add a strong password here
+ admin_password = var.admin_password   # <-- Add a strong password here
   disable_password_authentication = false     # <-- Important when using passwords
 
   os_disk {
