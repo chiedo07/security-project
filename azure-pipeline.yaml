@@ -41,9 +41,14 @@ steps:
 - script: terraform plan
   displayName: 'Terraform Plan'
   workingDirectory: '/home/vsts/work/1/s'  
+  env:
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
 
 - script: |
-    terraform apply -var "admin_password=Lemeke@201"
+    terraform apply -auto-approve tfplan
   displayName: 'Terraform Apply'
   workingDirectory: '/home/vsts/work/1/s'
   env:
