@@ -56,7 +56,7 @@ steps:
     ARM_TENANT_ID: $(ARM_TENANT_ID)
 
 - script: |
-    terraform apply -auto-approve tfplan
+    terraform apply -auto-approve 
   displayName: 'Terraform Apply'
   workingDirectory: '/home/vsts/work/1/s'
   env:
