@@ -36,6 +36,14 @@ steps:
   displayName: 'Terraform Validate'
   workingDirectory: '/home/vsts/work/1/s'
 
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'security'   # must match your service connection name
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az account show
+      az group list
 
 
 - script: terraform plan
