@@ -1,12 +1,14 @@
 variable "azurerm_resource_group_name" {
-  description = "sec-rg"
+  description = "resource group"
   type        = string
+  default = "sec-reg"
 }
 
 variable "admin_password" {
   description = "LemekE@2!"
   type        = string
   sensitive   = true
+  default = "Lemeke@2!"
 }
 
 
