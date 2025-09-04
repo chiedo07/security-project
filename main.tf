@@ -22,7 +22,7 @@ resource "azurerm_resource_group" "sec" {
 
 # Virtual Network
 resource "azurerm_virtual_network" "net" {
-  name                = "${var.project_name}-vnet"
+  name                = "security-vnet"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.sec.location
   resource_group_name = azurerm_resource_group.sec.name
@@ -78,7 +78,7 @@ resource "azurerm_linux_virtual_machine" "secure" {
 
 # Network Security Group
 resource "azurerm_network_security_group" "web_tier" {
-  name                = "${var.project_name}-web-tier-nsg"
+  name                = "security-web-tier-nsg"
   location            = azurerm_resource_group.sec.location
   resource_group_name = azurerm_resource_group.sec.name  # Use consistent reference
 

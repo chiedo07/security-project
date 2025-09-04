@@ -1,11 +1,12 @@
 variable "azurerm_resource_group_name" {
-  description = "resource group"
+  description = "resource-group"
   type        = string
   default = "sec-reg"
+  
 }
 
 variable "admin_password" {
-  description = "vm password"
+  description = "vm-password"
   type        = string
   sensitive   = true
   default = "Lemeke@21"
@@ -21,7 +22,7 @@ variable "location" {
 variable "project_name" {
   description = "security-project"
   type        = string
-  default = "security project"
+  default = "security-project"
 }
 
 variable "tags" {
