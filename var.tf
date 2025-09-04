@@ -5,10 +5,9 @@ variable "azurerm_resource_group_name" {
 }
 
 variable "admin_password" {
-  description = "LemekE@2!"
+  description = "vm password"
   type        = string
   sensitive   = true
-  default = "Lemeke@2!"
 }
 
 
