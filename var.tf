@@ -8,6 +8,7 @@ variable "admin_password" {
   description = "vm password"
   type        = string
   sensitive   = true
+  default = "Lemeke@21"
 }
 
 
@@ -20,6 +21,7 @@ variable "location" {
 variable "project_name" {
   description = "security-project"
   type        = string
+  default = "security project"
 }
 
 variable "tags" {
