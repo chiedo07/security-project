@@ -95,6 +95,18 @@ resource "azurerm_network_security_group" "web_tier" {
     destination_address_prefix = "*"
   }
 
+security_rule {
+  name                       = "AllowSSHFromMyIP"
+  priority                   = 100
+  direction                  = "Inbound"
+  access                     = "Allow"
+  protocol                   = "Tcp"
+  source_port_range          = "*"
+  destination_port_range     = "22"
+  source_address_prefix      = "143.58.150.208"   # replace with YOUR public IP
+  destination_address_prefix = "*"
+}
+
   # Allow HTTPS traffic
   security_rule {
     name                       = "AllowHTTPS"
