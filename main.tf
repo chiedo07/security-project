@@ -117,7 +117,7 @@ resource "azurerm_network_security_group" "web_tier" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "10.0.4.0/24"
+    source_address_prefix      = "143.58.150.208"
     destination_address_prefix = "*"
   }
 
